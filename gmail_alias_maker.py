@@ -1,5 +1,6 @@
-import json
 import random
+import json
+import re
 
 generated_alias = []
 json_data = []
@@ -27,32 +28,33 @@ surnames = ["Garcia", "Gonzalez", "Rodriguez", "Fernandez", "Lopez", "Martinez",
             "Vargas", "Mora", "Vicente", "Arias", "Carmona", "Crespo", "Roman", "Pastor", "Soto", "Saez", "Velasco",
             "Moya", "Soler", "Parra", "Esteban", "Bravo", "Gallardo", "Rojas"]
 
-def main():
-    username, domain = ask_user()
-    make_dot_alias(username, domain)
-    print_generated_alias()
 
 def ask_user():
     mail = input("Write your gmail account\n")
-
     if mail == "":
         mail = "test@fake.com"
     print ("Mail: " + mail)
+    print(mail)
+
     return mail.split('@')[0], mail.split('@')[1]
 
 
+
 def make_dot_alias(username,domain):
-    print("\nStarting alias creation...\n")
+    print("\nStarting alias creation...")
 
     for i in range (1,len(username)-1):
         generated_alias.append(username[0:i] + '.' + username[i:len(username)] + '@' + domain)
     generated_alias.append(username[0:len(username)-1] + '.' + username[-1] + '@' + domain)
 
+
 def get_man_name():
     return man_names[random.randint(0, 99)]
 
+
 def get_surnames():
     return surnames[random.randint(0, 99)]
+
 
 def print_generated_alias():
     for alias in generated_alias:
@@ -61,8 +63,17 @@ def print_generated_alias():
             'name': get_man_name(),
             'surname': get_surnames()
             })
-    print("Alias created.")
-
-main()
+    print("Alias created! (" + str(len(generated_alias)) +")\n")
 
 
+def write_json():
+    with open('data.json', 'w') as f:
+        json.dump(json_data, f, ensure_ascii=False)
+    print ("JSON created. Bye!\n Use it legally! ;)")
+
+
+# Use magic
+username, domain = ask_user()
+make_dot_alias(username, domain)
+print_generated_alias()
+write_json()
