@@ -104,6 +104,5 @@ def write_json():
 # Use magic
 mode, username, domain = ask_user()
 make_alias(mode,username,domain)
-#make_dot_alias(username, domain)
 print_generated_alias()
 write_json()
