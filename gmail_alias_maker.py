@@ -28,25 +28,51 @@ surnames = ["Garcia", "Gonzalez", "Rodriguez", "Fernandez", "Lopez", "Martinez",
             "Vargas", "Mora", "Vicente", "Arias", "Carmona", "Crespo", "Roman", "Pastor", "Soto", "Saez", "Velasco",
             "Moya", "Soler", "Parra", "Esteban", "Bravo", "Gallardo", "Rojas"]
 
+words = ["cama","hojas","anteojos","puerta","pantalón","cuchillo","rueda","teclado","librería","estrella","martillo","lentejas","living","zoológico","cinturón","calor","colegio","agua","herramienta","libro","pestaña","piso","tenedor","mensaje","carta","moño","lentes","ensalada","perro","caramelos","guitarra","sol","lapicera","nieve","maletín","granizo","hombre","petróleo","castillo","mono","mano","montañas","explosión","lluvia","ave","taladro","metal","reloj","flor","tornillo"]
 
 def ask_user():
     mail = input("Write your gmail account\n")
     if mail == "":
         mail = "test@fake.com"
     print ("Mail: " + mail)
-    print(mail)
 
-    return mail.split('@')[0], mail.split('@')[1]
+    mode = input("Choose mode: \n " + 
+              "1) Dots \n " +
+              "2) Random words \n " +  
+              "3) Mixed \n" + 
+              "Mode: ")
 
+    return mode, mail.split('@')[0], mail.split('@')[1]
 
+def make_alias(mode,username,domain):
+  if mode == "3":
+    make_dot_alias(username,domain)
+    make_word_alias(username,domain)
+  elif mode == "2":
+    make_word_alias(username,domain)
+  else:
+    make_dot_alias(username,domain)
 
 def make_dot_alias(username,domain):
-    print("\nStarting alias creation...")
+    print("\nCreating dot alias...")
 
     for i in range (1,len(username)-1):
         generated_alias.append(username[0:i] + '.' + username[i:len(username)] + '@' + domain)
     generated_alias.append(username[0:len(username)-1] + '.' + username[-1] + '@' + domain)
+    print("Done!\n")
 
+def make_word_alias(username,domain):
+  print("Creating word alias...\n")
+  alias_number = int(input("How many alias do you want?"))
+  
+  if alias_number > 50:
+    print("\nMaximum alias number is 50. Reasigned!")
+    alias_number = 50
+
+  for i in range (1, alias_number + 1):
+    generated_alias.append(username + '+' + get_word() +  '@' + domain)
+  
+  print ("Done!\n")
 
 def get_man_name():
     return man_names[random.randint(0, 99)]
@@ -54,6 +80,9 @@ def get_man_name():
 
 def get_surnames():
     return surnames[random.randint(0, 99)]
+
+def get_word():
+  return words[random.randint(0,49)]
 
 
 def print_generated_alias():
@@ -63,17 +92,18 @@ def print_generated_alias():
             'name': get_man_name(),
             'surname': get_surnames()
             })
-    print("Alias created! (" + str(len(generated_alias)) +")\n")
+    print ("[" + str(len(generated_alias)) + "] alias created! \n")
 
 
 def write_json():
     with open('data.json', 'w') as f:
         json.dump(json_data, f, ensure_ascii=False)
-    print ("JSON created. Bye!\n Use it legally! ;)")
+    print ("JSON is ready. Bye!\n Use it legally! ;)")
 
 
 # Use magic
-username, domain = ask_user()
-make_dot_alias(username, domain)
+mode, username, domain = ask_user()
+make_alias(mode,username,domain)
+#make_dot_alias(username, domain)
 print_generated_alias()
 write_json()
