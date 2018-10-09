@@ -16,7 +16,7 @@ El resultado es un fichero JSON en el que aparecerán las diferentes combinacion
 "mail": "t.est@gmail.com", 
 "name": "Francisco", 
 "surname": "Sanz",
-"dni":"45782796P"
+"dni":"40923317S"
 }]
 ```
 
