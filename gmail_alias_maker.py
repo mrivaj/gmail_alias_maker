@@ -5,28 +5,6 @@ import re
 generated_alias = []
 json_data = []
 
-# Data (Retrieved from INE website
-man_names = ["Antonio", "Jose","Manuel",  "Francisco", "David", "Juan", "Jose Antonio", "Javier", "Jose Luis", "Daniel",
-             "Francisco Javier", "Jesus", "Carlos", "Alejandro", "Miguel", "Jose Manuel", "Rafael", "Pedro",
-             "Miguel Angel","Angel", "Pablo", "Jose Maria", "Fernando", "Sergio", "Luis", "Jorge", "Alberto",
-             "Juan Carlos", "Alvaro","Juan Jose", "Diego", "Adrian", "Raul", "Juan Antonio", "Ivan", "Enrique", "Ruben",
-             "Ramon", "Vicente", "Oscar","Andres", "Joaquin", "Juan Manuel", "Santiago", "Eduardo", "Victor", "Mario",
-             "Roberto", "Jaime", "Francisco Jose","Ignacio", "Marcos", "Alfonso", "Jordi", "Salvador", "Ricardo",
-             "Emilio", "Hugo", "Guillermo", "Gabriel", "Julian","Julio", "Marc", "Tomas", "Jose Miguel", "Gonzalo",
-             "Agustin", "Mohamed", "Jose Ramon", "Felix", "Nicolas", "Joan", "Martin", "Ismael", "Cristian", "Samuel",
-             "Aitor", "Juan Francisco", "Josep", "Hector", "Mariano", "Domingo","Jose Carlos", "Alfredo", "Sebastian",
-             "Iker", "Cesar", "Felipe", "Alex", "Lucas", "Jose Angel", "Jose Ignacio","Victor Manuel", "Luis Miguel",
-             "Rodrigo", "Gregorio", "Jose Francisco", "Juan Luis", "Xavier", "Albert"]
-surnames = ["Garcia", "Gonzalez", "Rodriguez", "Fernandez", "Lopez", "Martinez", "Sanchez", "Perez", "Gomez", "Martin",
-            "Jimenez", "Ruiz", "Hernandez", "Diaz", "Moreno", "Muñoz", "Alvarez", "Romero", "Alonso", "Gutierrez",
-            "Navarro", "Torres", "Dominguez", "Vazquez", "Ramos", "Gil", "Ramirez", "Serrano", "Blanco", "Molina",
-            "Morales", "Suarez", "Ortega", "Delgado", "Castro", "Ortiz", "Rubio", "Marin", "Sanz", "Nuñez", "Iglesias",
-            "Medina", "Garrido", "Cortes", "Castillo", "Santos", "Lozano", "Guerrero", "Cano", "Prieto", "Mendez",
-            "Cruz", "Calvo", "Gallego", "Herrera", "Marquez", "Leon", "Vidal", "Peña", "Flores", "Cabrera", "Campos",
-            "Vega", "Fuentes", "Carrasco", "Diez", "Reyes", "Caballero", "Nieto", "Aguilar", "Pascual", "Santana",
-            "Herrero", "Montero", "Lorenzo", "Hidalgo", "Gimenez", "Ibañez", "Ferrer", "Duran", "Santiago", "Benitez",
-            "Vargas", "Mora", "Vicente", "Arias", "Carmona", "Crespo", "Roman", "Pastor", "Soto", "Saez", "Velasco",
-            "Moya", "Soler", "Parra", "Esteban", "Bravo", "Gallardo", "Rojas"]
 
 words = ["cama","hojas","anteojos","puerta","pantalón","cuchillo","rueda","teclado","librería","estrella","martillo","lentejas","living","zoológico","cinturón","calor","colegio","agua","herramienta","libro","pestaña","piso","tenedor","mensaje","carta","moño","lentes","ensalada","perro","caramelos","guitarra","sol","lapicera","nieve","maletín","granizo","hombre","petróleo","castillo","mono","mano","montañas","explosión","lluvia","ave","taladro","metal","reloj","flor","tornillo"]
 
@@ -62,8 +40,7 @@ def make_dot_alias(username,domain):
     print("Done!\n")
 
 def make_word_alias(username,domain):
-  print("Creating word alias...\n")
-  alias_number = int(input("How many alias do you want?"))
+  alias_number = int(input("How many word alias do you want?\n"))
   
   if alias_number > 50:
     print("\nMaximum alias number is 50. Reasigned!")
@@ -74,35 +51,19 @@ def make_word_alias(username,domain):
   
   print ("Done!\n")
 
-def get_man_name():
-    return man_names[random.randint(0, 99)]
-
-
-def get_surnames():
-    return surnames[random.randint(0, 99)]
 
 def get_word():
   return words[random.randint(0,49)]
 
 
-def print_generated_alias():
-    for alias in generated_alias:
-        json_data.append({
-            'mail': alias,
-            'name': get_man_name(),
-            'surname': get_surnames()
-            })
-    print ("[" + str(len(generated_alias)) + "] alias created! \n")
+def get_generated_alias():
+  return generated_alias
 
-
-def write_json():
-    with open('data.json', 'w') as f:
-        json.dump(json_data, f, ensure_ascii=False)
-    print ("JSON is ready. Bye!\n Use it legally! ;)")
-
+def get_mail():
+  return username + '@' + domain
 
 # Use magic
+print("#####   Hotdog Maker   #####\n")
 mode, username, domain = ask_user()
 make_alias(mode,username,domain)
-print_generated_alias()
-write_json()
+get_generated_alias()
